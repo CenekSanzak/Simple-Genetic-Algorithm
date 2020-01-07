@@ -61,9 +61,9 @@ def next_generation():
 
 
 create_population()
-for i in range(1000):
-    if i%int(steps/periods) == 0:
-        print(int(i/periods))
+for i in range(steps):
+    if i % int(steps/periods) == 0:
+        print(int(i/steps*periods)+1)
     next_generation()
 print("Results:")
 for i in range(len(population)):
