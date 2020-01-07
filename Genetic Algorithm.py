@@ -20,24 +20,24 @@ def create_random_text(length):
     return res
 
 
-def score(gen):
+def score(gene):
     sc = 0
     for i in range(target_length):
-        if gen[i] == target[i]:
+        if gene[i] == target[i]:
             sc += 1
     return sc
 
 
-def mix_gens(gen1, gen2):
-    new_gen = ""
-    new_gen += gen1[0: target_length - change_length]
-    new_gen += gen2[target_length - change_length: target_length]
+def mix_genes(gene1, gene2):
+    new_gene = ""
+    new_gene += gene1[0: target_length - change_length]
+    new_gene += gene2[target_length - change_length: target_length]
     for i in range(target_length-1):
         if random.random() < mutation_rate:
-            new_gen = new_gen[:i] + alphabet[random.randint(0, len(alphabet)-1)] + new_gen[i+1:]
+            new_gene = new_gene[:i] + alphabet[random.randint(0, len(alphabet)-1)] + new_gene[i+1:]
     if random.random() < mutation_rate:
-        new_gen = new_gen[:target_length-1] + alphabet[random.randint(0, len(alphabet)-1)]
-    return new_gen
+        new_gene = new_gene[:target_length-1] + alphabet[random.randint(0, len(alphabet)-1)]
+    return new_gene
 
 
 def create_population():
@@ -48,16 +48,16 @@ def create_population():
 def next_generation():
     q = PriorityQueue()
     global population
-    for gen in population:
-        q.put((score(gen), gen))
+    for gene in population:
+        q.put((score(gene), gene))
     population = []
     for i in range(population_size):
-        gen = q.get()
+        gene = q.get()
         if i > population_size*kill_rate:
-            s, gen = gen
-            population.append(gen)
+            s, gene = gene
+            population.append(gene)
     while len(population) < population_size:
-        population.append(mix_gens(population[random.randint(0, len(population)-1)], population[random.randint(0, len(population)-1)]))
+        population.append(mix_genes(population[random.randint(0, len(population)-1)], population[random.randint(0, len(population)-1)]))
 
 
 create_population()
